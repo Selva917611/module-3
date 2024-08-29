@@ -1,0 +1,72 @@
+[ec2-user@ip-172-31-29-37 ~]$ sudo su
+[root@ip-172-31-29-37 ec2-user]# nslookup guvi.com
+Server:         172.31.0.2
+Address:        172.31.0.2#53
+
+Non-authoritative answer:
+Name:   guvi.com
+Address: 104.21.79.166
+Name:   guvi.com
+Address: 172.67.146.154
+Name:   guvi.com
+Address: 2606:4700:3037::ac43:929a
+Name:   guvi.com
+Address: 2606:4700:3031::6815:4fa6
+
+[root@ip-172-31-29-37 ec2-user]# top
+top - 11:40:08 up 35 min,  5 users,  load average: 0.00, 0.00, 0.00
+Tasks: 118 total,   1 running, 117 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :    949.5 total,    519.3 free,    139.5 used,    290.7 buff/cache
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.    667.9 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                    
+   2950 root      20   0  223408   2752   2524 S   0.3   0.3   0:00.67 ping                                                                                       
+      1 root      20   0  105200  16532  10160 S   0.0   1.7   0:01.01 systemd                                                                                    
+      2 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kthreadd                                                                                   
+      3 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_gp                                                                                     
+      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_par_gp                                                                                 
+      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 slub_flushwq                                                                               
+      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 netns                                                                                      
+      8 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/0:0H-events_highpri                                                                
+     10 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 mm_percpu_wq                                                                               
+     11 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_kthread                                                                          
+     12 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_rude_kthread                                                                     
+     13 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_trace_kthread                                                                    
+     14 root      20   0       0      0      0 S   0.0   0.0   0:00.13 ksoftirqd/0                                                                                
+     15 root      20   0       0      0      0 I   0.0   0.0   0:00.07 rcu_preempt                                                                                
+     16 root      rt   0       0      0      0 S   0.0   0.0   0:00.01 migration/0                                                                                
+     18 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/0                                                                                    
+     20 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kdevtmpfs                                                                                  
+     21 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 inet_frag_wq                                                                               
+     22 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kauditd                                                                                    
+     23 root      20   0       0      0      0 S   0.0   0.0   0:00.00 khungtaskd                                                                                 
+     24 root      20   0       0      0      0 S   0.0   0.0   0:00.00 oom_reaper        
+[root@ip-172-31-29-37 ec2-user]# telnet guvi.com
+Trying 172.67.146.154...
+telnet: connect to address 172.67.146.154: Connection timed out
+Trying 104.21.79.166...
+telnet: connect to address 104.21.79.166: Connection timed out
+Trying 2606:4700:3031::6815:4fa6...
+telnet: connect to address 2606:4700:3031::6815:4fa6: Network is unreachable
+Trying 2606:4700:3037::ac43:929a...
+telnet: connect to address 2606:4700:3037::ac43:929a: Network is unreachable
+[root@ip-172-31-29-37 ec2-user]# telnet guvi.com 9000
+Trying 104.21.79.166...
+telnet: connect to address 104.21.79.166: Connection timed out
+Trying 172.67.146.154...
+telnet: connect to address 172.67.146.154: Connection timed out
+Trying 2606:4700:3037::ac43:929a...
+telnet: connect to address 2606:4700:3037::ac43:929a: Network is unreachable
+Trying 2606:4700:3031::6815:4fa6...
+telnet: connect to address 2606:4700:3031::6815:4fa6: Network is unreachable   
+[root@ip-172-31-29-37 ec2-user]# nmap -p 9000 guvi.com
+Starting Nmap 7.93 ( https://nmap.org ) at 2024-08-29 12:09 UTC
+Nmap scan report for guvi.com (172.67.146.154)
+Host is up (0.0057s latency).
+Other addresses for guvi.com (not scanned): 104.21.79.166 2606:4700:3031::6815:4fa6 2606:4700:3037::ac43:929a
+
+PORT     STATE    SERVICE
+9000/tcp filtered cslistener
+
+Nmap done: 1 IP address (1 host up) scanned in 0.51 seconds          
